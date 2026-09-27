@@ -1,0 +1,55 @@
+# Credentials and local configuration
+.env
+.env.*
+*.env
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+.secrets/
+credentials/
+.npmrc
+.pgpass
+*.jks
+*.keystore
+*.dump
+*.sql.gz
+
+# Machine-specific agent state and editor settings
+.codex/
+.agents/
+.idea/
+.vscode/
+
+# Dependencies and generated outputs
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+coverage/
+htmlcov/
+.coverage
+.coverage.*
+playwright-report/
+test-results/
+
+# Private local data and logs
+uploads/
+private-data/
+*.sqlite
+*.sqlite3
+*.db
+*.log
+.DS_Store
+.local/
+.runtime/
+artifacts/
+*.tsbuildinfo

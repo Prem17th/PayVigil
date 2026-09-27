@@ -1,0 +1,144 @@
+{
+  "name": "PayVigil \u2014 authenticated supplier inbox delivery",
+  "active": false,
+  "nodes": [
+    {
+      "id": "entry",
+      "name": "Finance approved request",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "beforetransfer-confirmation",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "beforetransfer-confirmation",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "BIND_INCOMING_CREDENTIAL",
+          "name": "PayVigil incoming request"
+        }
+      }
+    },
+    {
+      "id": "prepare",
+      "name": "Validate and prepare callback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        250,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const body = $json.body;\nif (!body || typeof body.delivery_id !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(body.delivery_id) || !Number.isInteger(body.attempt) || body.attempt < 1 || body.attempt > 3) {\n  throw new Error('Invalid delivery reference');\n}\nconst callback = {event_id: body.delivery_id + ':' + body.attempt, delivery_id: body.delivery_id, attempt: body.attempt, status: 'DELIVERED'};\nreturn [{json: {callback_body: JSON.stringify(callback), timestamp: String(Math.floor(Date.now() / 1000))}}];"
+      }
+    },
+    {
+      "id": "callback",
+      "name": "Deliver into assigned inbox",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR-PAYVIGIL-API.example.invalid/api/integrations/n8n/callback",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-BT-Timestamp",
+              "value": "={{ $json.timestamp }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ $json.callback_body }}",
+        "options": {
+          "timeout": 15000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "BIND_CALLBACK_CREDENTIAL",
+          "name": "PayVigil callback authentication"
+        }
+      }
+    },
+    {
+      "id": "respond",
+      "name": "Acknowledge receipt",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        750,
+        0
+      ],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"accepted\":true}",
+        "options": {
+          "responseCode": 200
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Finance approved request": {
+      "main": [
+        [
+          {
+            "node": "Validate and prepare callback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate and prepare callback": {
+      "main": [
+        [
+          {
+            "node": "Deliver into assigned inbox",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Deliver into assigned inbox": {
+      "main": [
+        [
+          {
+            "node": "Acknowledge receipt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false
+  }
+}

@@ -1,0 +1,12 @@
+SYNTHETIC TEST DOCUMENT — no real company, account or funds.
+Document type: Supplier invoice
+Supplier: Kaveri Packaging
+Invoice reference: SYN-EVIDENCE-001
+Invoice date: 2026-09-27
+Currency: INR
+Total amount: 125000.00
+Amount (paise): 12500000
+Beneficiary name: Kaveri Packaging
+Sandbox account ID: SIM-KAVERI-001
+Description: Synthetic packaging materials for local workflow verification.
+Payment instructions must be independently confirmed in the supplier portal.

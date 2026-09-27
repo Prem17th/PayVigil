@@ -1,0 +1,10 @@
+SYNTHETIC TEST DOCUMENT — historical context only.
+Document type: Previous invoice
+Supplier: Kaveri Packaging
+Invoice reference: SYN-HISTORY-2025-010
+Invoice date: 2025-10-01
+Currency: INR
+Total amount: 125000.00
+Beneficiary name: Kaveri Packaging
+Sandbox account ID: SIM-HISTORICAL-010
+This past instruction does not establish the destination for a current invoice.

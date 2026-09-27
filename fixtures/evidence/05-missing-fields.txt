@@ -1,0 +1,6 @@
+SYNTHETIC TEST DOCUMENT — deliberately incomplete.
+Supplier: Kaveri Packaging
+Document type: Delivery note
+Items: 50 boxes of packaging materials.
+The note contains no invoice reference, currency, total amount or destination.
+An investigator should leave missing values unresolved.

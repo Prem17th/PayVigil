@@ -1,0 +1,11 @@
+SYNTHETIC TEST DOCUMENT — unverified request, no real contact or funds.
+Document type: Copied payment instruction message
+Supplier claimed by sender: Kaveri Packaging
+Invoice reference: SYN-EVIDENCE-001
+Currency: INR
+Total amount: 125000.00
+Please urgently use this new beneficiary for this invoice:
+Beneficiary name: Kaveri Collections
+Sandbox account ID: SIM-CHANGED-999
+The sender claims that their old destination is no longer available.
+This document is evidence of a request, not proof of identity or ownership.

@@ -1,0 +1,162 @@
+# Prepared hosting only. Supply managed secrets and review the selected plan.
+# Prefer scripts/render_release.py for inert provisioning + exact-commit releases.
+services:
+  - type: web
+    name: payvigil-api
+    runtime: python
+    rootDir: backend
+    plan: starter
+    region: singapore
+    autoDeployTrigger: "off"
+    buildCommand: pip install -r requirements.txt
+    preDeployCommand: alembic upgrade head
+    startCommand: env -u MIGRATION_DATABASE_URL uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/ready
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.12"
+      - key: APP_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: MIGRATION_DATABASE_URL
+        sync: false
+      - key: PGSSLMODE
+        value: verify-full
+      - key: PGSSLROOTCERT
+        value: system
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_PUBLISHABLE_KEY
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: beforetransfer-evidence
+      - key: CORS_ORIGINS
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        sync: false
+      - key: BREETH_API_KEY
+        sync: false
+      - key: N8N_WEBHOOK_URL
+        sync: false
+      - key: N8N_WEBHOOK_TOKEN
+        sync: false
+      - key: N8N_CALLBACK_SECRET
+        sync: false
+      - key: N8N_CALLBACK_AUTH_MODE
+        value: header
+      - key: ELEVENLABS_API_KEY
+        sync: false
+      - key: ELEVENLABS_VOICE_ID
+        sync: false
+      - key: DODO_API_KEY
+        sync: false
+      - key: DODO_PRODUCT_ID
+        sync: false
+      - key: DODO_WEBHOOK_SECRET
+        sync: false
+      - key: BILLING_FRONTEND_ORIGIN
+        sync: false
+
+  - type: web
+    name: payvigil-sandbox
+    runtime: python
+    plan: starter
+    region: singapore
+    autoDeployTrigger: "off"
+    buildCommand: pip install -r backend/requirements.txt
+    preDeployCommand: python -m sandbox_service.bootstrap
+    startCommand: env -u SANDBOX_MIGRATION_DATABASE_URL uvicorn sandbox_service.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /ready
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.12"
+      - key: SANDBOX_APP_ENV
+        value: production
+      - key: SANDBOX_DATABASE_URL
+        sync: false
+      - key: SANDBOX_MIGRATION_DATABASE_URL
+        sync: false
+      - key: SANDBOX_PGSSLMODE
+        value: verify-full
+      - key: SANDBOX_PGSSLROOTCERT
+        value: system
+      - key: SANDBOX_API_KEY
+        generateValue: true
+
+  - type: worker
+    name: payvigil-worker
+    runtime: python
+    rootDir: backend
+    plan: starter
+    region: singapore
+    autoDeployTrigger: "off"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m app.payment_worker
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13.12"
+      - key: APP_ENV
+        value: production
+      - key: WORKER_DATABASE_URL
+        sync: false
+      - key: PGSSLMODE
+        value: verify-full
+      - key: PGSSLROOTCERT
+        value: system
+      - key: PAYMENTS_SANDBOX_URL
+        fromService:
+          name: payvigil-sandbox
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: PAYMENTS_SANDBOX_API_KEY
+        fromService:
+          name: payvigil-sandbox
+          type: web
+          envVarKey: SANDBOX_API_KEY
+
+  - type: web
+    name: payvigil-web
+    runtime: static
+    rootDir: frontend
+    autoDeployTrigger: "off"
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: NODE_VERSION
+        value: "24.21.0"
+      - key: VITE_LOCAL_SANDBOX
+        value: "false"
+      - key: VITE_API_BASE_URL
+        fromService:
+          name: payvigil-api
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: VITE_SUPABASE_URL
+        fromService:
+          name: payvigil-api
+          type: web
+          envVarKey: SUPABASE_URL
+      - key: VITE_SUPABASE_PUBLISHABLE_KEY
+        fromService:
+          name: payvigil-api
+          type: web
+          envVarKey: SUPABASE_PUBLISHABLE_KEY

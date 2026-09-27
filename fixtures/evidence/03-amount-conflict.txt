@@ -1,0 +1,10 @@
+SYNTHETIC TEST DOCUMENT — intentionally contradicts the original invoice.
+Document type: Revised invoice claim
+Supplier: Kaveri Packaging
+Invoice reference: SYN-EVIDENCE-001
+Currency: INR
+Total amount: 175000.00
+Amount (paise): 17500000
+Beneficiary name: Kaveri Packaging
+Sandbox account ID: SIM-KAVERI-001
+The original invoice stated INR 125000.00. No accepted amendment is attached.
