@@ -2,7 +2,7 @@
 
 ## Authorized scope
 
-The user requested a public `venupyneni07/payvigil` repository, a code push with
+The user requested a public `Prem17th/Payvigil` repository, a code push with
 no secrets, and a production-oriented code structure. This report covers source
 organization and publication checks; Render application deployment is separate.
 

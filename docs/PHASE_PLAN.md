@@ -11,7 +11,7 @@ automation is configured.
 ## Current status
 
 - Product branding: renamed to PayVigil; intended GitHub repository is
-  `venupyneni07/payvigil`. Local SSH authentication and branding checks passed;
+  `Prem17th/Payvigil`. Local authentication and branding checks passed;
   see [the branding report](reports/payvigil-branding.md).
 - Public repository: the user authorized public source publication without
   secrets. Domain packages, CI, repository guidance and publication checks are

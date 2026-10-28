@@ -84,7 +84,7 @@ to production. Render and hosted Supabase remain the production targets.
 
 ## Current state
 
-The user selected PayVigil as the product name and venupyneni07 as the GitHub
+The user selected PayVigil as the product name and Prem T H (Prem17th) as the GitHub
 owner and explicitly authorized creating a public repository and pushing the
 code without secrets. Use payvigil for the repository and new Render service prefix.
 Maintain the domain-oriented backend packages, checked CI gates and documented

@@ -4,8 +4,8 @@ Date: 2026-09-27
 
 ## Scope and changes
 
-The user selected PayVigil as the product name and requested GitHub username
-`venupyneni07` with the existing local SSH setup.
+The user selected PayVigil as the product name and requested maintainer
+`Prem T H` (`Prem17th`) with repository `Prem17th/Payvigil`.
 
 - Updated frontend wordmark, favicon letter, browser titles, sign-in copy,
   billing copy, downloaded-report prefix and package metadata to PayVigil.
@@ -13,11 +13,9 @@ The user selected PayVigil as the product name and requested GitHub username
   documentation, operator messages, and n8n workflow/credential display labels.
 - Changed the default prefix for future Render services to `payvigil` and updated
   matching Blueprint references. No Render resources were created or renamed.
-- Verified that the existing `github.com-gmail` SSH alias authenticates as
-  `venupyneni07`. Configured local Git origin as
-  `git@github.com-gmail:venupyneni07/payvigil.git`.
+- Configured local Git origin as `https://github.com/Prem17th/Payvigil.git`.
 - Render's repository setting continues to require the credential-free HTTPS
-  form: `https://github.com/venupyneni07/payvigil`.
+  form: `https://github.com/Prem17th/Payvigil`.
 
 ## Compatibility
 
@@ -41,8 +39,8 @@ No credentials were changed, printed, staged or committed.
 
 ## Remaining work
 
-The GitHub repository lookup returned missing or inaccessible for
-`venupyneni07/payvigil`; this turn did not create a repository or push source.
+The GitHub repository has been configured and migrated to
+`Prem17th/Payvigil`.
 Provider verification and public deployment remain pending. The previously
 identified ElevenLabs default-voice compatibility issue also remains open;
 branding checks do not establish live-provider readiness.

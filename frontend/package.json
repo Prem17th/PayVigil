@@ -2,6 +2,7 @@
   "name": "payvigil-web",
   "private": true,
   "version": "0.1.0",
+  "author": "Prem T H",
   "type": "module",
   "engines": { "node": ">=22.12.0" },
   "scripts": {

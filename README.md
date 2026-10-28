@@ -133,6 +133,11 @@ new-account ElevenLabs voice compatibility, controlled hosted end-to-end checks,
 and infrastructure backup/restore validation. Existing `beforetransfer` schema,
 role, bucket and protocol identifiers are retained for compatibility.
 
+## Maintainer
+
+- **Maintainer:** [Prem T H](https://github.com/Prem17th)
+- **Repository:** [Prem17th/Payvigil](https://github.com/Prem17th/Payvigil)
+
 ## Project documentation
 
 - [Architecture and trust boundaries](docs/ARCHITECTURE.md)
