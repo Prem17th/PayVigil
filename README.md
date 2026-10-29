@@ -136,7 +136,7 @@ role, bucket and protocol identifiers are retained for compatibility.
 ## Maintainer
 
 - **Maintainer:** [Prem T H](https://github.com/Prem17th)
-- **Repository:** [Prem17th/Payvigil](https://github.com/Prem17th/Payvigil)
+- **Repository:** [Prem17th/PayVigil](https://github.com/Prem17th/PayVigil)
 
 ## Project documentation
 

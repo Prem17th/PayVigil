@@ -27,9 +27,9 @@ express this topology. Choose one provisioning method per resource; do not creat
 an extra set through both. Existing services can be adopted after identity checks.
 Automatic deploys are disabled so a release selects an explicit reviewed commit.
 
-Use the public GitHub repository `https://github.com/Prem17th/Payvigil`
+Use the public GitHub repository `https://github.com/Prem17th/PayVigil`
 and an explicitly reviewed commit. `RENDER_REPO_URL` must remain
-`https://github.com/Prem17th/Payvigil`. Use `RENDER_NAME_PREFIX=payvigil`
+`https://github.com/Prem17th/PayVigil`. Use `RENDER_NAME_PREFIX=payvigil`
 for newly provisioned Render services.
 Existing `beforetransfer` database,
 schema and role identifiers, the `beforetransfer-evidence` bucket, and protocol
